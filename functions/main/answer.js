@@ -10,6 +10,7 @@ const nexmo = new Nexmo({
 
 exports.handler = async (event, context) => {
   try {
+    console.dir(JSON.parse(event.body.from));
     nexmo.channel.send(
       {
         "type": 'sms',
