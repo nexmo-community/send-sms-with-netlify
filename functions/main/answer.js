@@ -5,7 +5,7 @@ const nexmo = new Nexmo({
   apiKey: process.env.API_KEY,
   apiSecret: process.env.API_SECRET,
   applicationId: process.env.APP_ID,
-  privateKey: process.env.PRIVATE_KEY
+  privateKey: Buffer.from(process.env.PRIVATE_KEY, 'utf-8')
 });
 
 exports.handler = async (event, context) => {
