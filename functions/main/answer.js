@@ -5,8 +5,13 @@ const nexmo = new Nexmo({
   apiKey: process.env.API_KEY,
   apiSecret: process.env.API_SECRET,
   applicationId: process.env.APP_ID,
-  privateKey: Buffer.from(process.env.PRIVATE_KEY, 'utf-8')
+  privateKey: process.env.PRIVATE_KEY
 });
+
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type'
+}
 
 exports.handler = async (event, context) => {
   try {
@@ -36,9 +41,11 @@ exports.handler = async (event, context) => {
     );
 
     return {
-      statusCode: 204
+      headers,
+      statusCode: 204,
+      body: "ok"
     }
   } catch(e) {
-    return { statusCode: 500, body: 'Error: ' + e };
+    return { headers, statusCode: 500, body: 'Error: ' + e };
   }
 };
