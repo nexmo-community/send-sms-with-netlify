@@ -5,7 +5,7 @@ const nexmo = new Nexmo({
   apiKey: process.env.API_KEY,
   apiSecret: process.env.API_SECRET,
   applicationId: process.env.APP_ID,
-  privateKey: process.env.PRIVATE_KEY
+  privateKey: Buffer.from(process.env.PRIVATE_KEY)
 });
 
 const headers = {
@@ -14,12 +14,15 @@ const headers = {
 }
 
 exports.handler = async (event, context) => {
+  console.log(event.body);
+
   try {
-    console.dir(JSON.parse(event.body.from));
+    var from = JSON.parse(event.body).from;
+    
     nexmo.channel.send(
       {
         "type": 'sms',
-        "number": JSON.parse(event.body.from.number)
+        "number": from.number
       },
       {
         "type": 'sms',
